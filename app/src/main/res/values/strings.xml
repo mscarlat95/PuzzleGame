@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">PuzzleGame</string>
+    <string name="number_default_val">-1</string>
+</resources>
