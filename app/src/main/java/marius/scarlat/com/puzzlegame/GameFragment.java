@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +44,7 @@ public class GameFragment extends Fragment {
     }
 
     public boolean updateGame(ArrayList<Integer> numbers) {
-        Log.d(TAG, "updateGame: Updating game parameters");
+        Log.d(TAG, "Updating game parameters");
         game.setNumbers(numbers);
 
         /* Check if game is finished */
@@ -74,7 +75,7 @@ public class GameFragment extends Fragment {
 
     /* Setup a new game */
     private void initGame() {
-        Log.d(TAG, "initGame: Setup a new game");
+        Log.d(TAG, "Initializing a new game");
 
         game = new Game();
         game.setState(Constants.ACTIVE);
@@ -83,7 +84,7 @@ public class GameFragment extends Fragment {
 
     /* Set layout horizontal and populate it with random numbers */
     private void initRecylerView() {
-        Log.d(TAG, "initRecylerView: Method was invoked!");
+        Log.d(TAG, "Initializing the RecylerView and its items");
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), this, game.getNumbers());
@@ -93,12 +94,14 @@ public class GameFragment extends Fragment {
     }
 
     private void initChronometer() {
+        Log.d(TAG, "Initializing the Chronometer");
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.start();
-        chronometer.setFormat("- %s -");
+        chronometer.setFormat("- Elapsed Time: %s -");
     }
 
-    private void startGame() {
+    public void startGame() {
+        Log.d(TAG, "Starting a new game");
         /* Initialize the game */
         initGame();
 
@@ -113,6 +116,25 @@ public class GameFragment extends Fragment {
         initChronometer();
     }
 
+    private void initViews(View view) {
+        chronometer = view.findViewById(R.id.elapsed_time_chronometer);
+        recyclerView = view.findViewById(R.id.recycler_view);
+        infoTextView = view.findViewById(R.id.info_text_view);
+    }
+
+    private void initToolbar(View view) {
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((MainActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity) getActivity()).setViewPager(Constants.MENU_FRAGMENT_POSITION);
+            }
+        });
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -120,12 +142,11 @@ public class GameFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
-        /* Initialize Android views */
-        chronometer = view.findViewById(R.id.elapsed_time_chronometer);
-        recyclerView = view.findViewById(R.id.recycler_view);
-        infoTextView = view.findViewById(R.id.info_text_view);
+        /* Initialize toolbar */
+        initToolbar(view);
 
-        startGame();
+        /* Initialize Android views */
+        initViews(view);
 
         return view;
     }

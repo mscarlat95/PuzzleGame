@@ -31,7 +31,7 @@ public class MenuFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity) getActivity()).setViewPager(1);
+                ((MainActivity) getActivity()).setViewPager(Constants.GAME_FRAGMENT_POSITION);
             }
         });
 

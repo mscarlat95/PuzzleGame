@@ -20,18 +20,49 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.container);
         setupViewPager();
-        setViewPager(0);
+        setViewPager(Constants.MENU_FRAGMENT_POSITION);
     }
 
     private void setupViewPager() {
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        final FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
 
-        fragmentAdapter.addFragment(new MenuFragment(), "Menu Fragment");
-        fragmentAdapter.addFragment(new GameFragment(), "Game Fragment");
-
-//        fragmentAdapter.addFragment(new ScoreFragment(), "Score Fragment");
+        fragmentAdapter.addFragment(new MenuFragment(), Constants.FRAGMENT_TITLES[Constants.MENU_FRAGMENT_POSITION]);
+        fragmentAdapter.addFragment(new GameFragment(), Constants.FRAGMENT_TITLES[Constants.GAME_FRAGMENT_POSITION]);
+        fragmentAdapter.addFragment(new HighScoreFragment(), Constants.FRAGMENT_TITLES[Constants.SCORE_FRAGMENT_POSITION]);
 
         viewPager.setAdapter(fragmentAdapter);
+
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageSelected(int position) {
+
+                switch (position){
+                    case Constants.MENU_FRAGMENT_POSITION:
+                        Log.d(TAG, "onPageSelected: MENU_FRAGMENT_POSITION");
+                        // TODO: get scores
+                        break;
+
+                    case Constants.GAME_FRAGMENT_POSITION:
+                        Log.d(TAG, "onPageSelected: GAME_FRAGMENT_POSITION");
+                        ((GameFragment) fragmentAdapter.getItem(position)).startGame();
+                        break;
+
+                    case Constants.SCORE_FRAGMENT_POSITION:
+                        Log.d(TAG, "onPageSelected: SCORE_FRAGMENT_POSITION");
+                        // TODO: get scores ; update user score
+                        break;
+
+                    default:
+                        throw new RuntimeException("onPageSelected: Received unkown position " + position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
     }
 
 

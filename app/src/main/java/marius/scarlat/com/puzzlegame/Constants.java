@@ -3,6 +3,8 @@ package marius.scarlat.com.puzzlegame;
 
 public class Constants {
 
+    public static final String UNSET = "Unset";
+
     /* Game Status */
     public static final boolean ACTIVE = true;
     public static final boolean INACTIVE = false;
