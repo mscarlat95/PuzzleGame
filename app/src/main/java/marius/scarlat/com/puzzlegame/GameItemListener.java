@@ -1,6 +1,5 @@
 package marius.scarlat.com.puzzlegame;
 
-
 import android.content.ClipData;
 import android.content.ClipDescription;
 import android.graphics.Color;

@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">PuzzleGame</string>
     <string name="number_default_val">-1</string>
+    <string name="restart_game_msg">Press here in order to restart the game!</string>
+    <string name="sort_numbers_info">* Sort numbers in ascending order</string>
+    <string name="start_game_info">* Click anywhere to START</string>
 </resources>

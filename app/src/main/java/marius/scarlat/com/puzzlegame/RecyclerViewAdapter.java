@@ -17,6 +17,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private static final String TAG = "RecyclerViewAdapter";
 
+    private GameFragment fragment;
     private Context context;
     private ArrayList<Integer> numbers = new ArrayList<>();
 
@@ -26,8 +27,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void setContext(Context context) { this.context = context; }
     public void setNumbers(ArrayList<Integer> numbers) { this.numbers = numbers; }
 
-    public RecyclerViewAdapter(Context context, ArrayList<Integer> numbers) {
+    public RecyclerViewAdapter(Context context, GameFragment fragment, ArrayList<Integer> numbers) {
         this.context = context;
+        this.fragment = fragment;
         this.numbers = numbers;
     }
 
@@ -39,7 +41,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         /* Inflates the provided layout */
         if (viewType == Constants.TYPE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.layout_item, parent, false);
+                    R.layout.layout_list_item, parent, false);
             return new ViewHolder(view);
         }
 
@@ -71,7 +73,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public boolean isGameAvailable() {
-        return ((MainActivity) context).checkGameAvailable();
+        return fragment.checkGameAvailable();
     }
 
     public void updateDataLogic(int viewValue, int dragValue) {
@@ -98,7 +100,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
         Log.d(TAG, "updateDataLogic: After = " + numbers);
 
-        ((MainActivity) context).updateGame(numbers);
+        fragment.updateGame(numbers);
     }
 
     /* Item holder managed by RecyclerView */

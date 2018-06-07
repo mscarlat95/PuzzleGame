@@ -10,6 +10,17 @@ public class Constants {
     /* RecyclerView Type Item */
     public static final int TYPE_ITEM = 8;
 
+
+    /* Fragments Titles */
+    public static final String[] FRAGMENT_TITLES= { "Menu Fragment",
+                                                    "Game Fragment",
+                                                    "Score Fragment"};
+
+    public static final int MENU_FRAGMENT_POSITION = 0;
+    public static final int GAME_FRAGMENT_POSITION = 1;
+    public static final int SCORE_FRAGMENT_POSITION = 2;
+
+
     /* Shared Preferences */
     public static final String DEFAULT_NAME = "Unkown";
 
