@@ -152,6 +152,12 @@ public class GameFragment extends Fragment {
     public void startGame() {
         Log.d(TAG, "Starting a new game");
 
+        /* Initialize the game */
+        initGame();
+
+        /* Initialize and populate the RecyclerView */
+        initRecylerView();
+
         /* Initialize bottom info */
         infoTextView.setText(R.string.sort_numbers_info);
         infoTextView.setOnClickListener(null);
@@ -185,11 +191,5 @@ public class GameFragment extends Fragment {
 
         /* Initialize Android views */
         initViews(view);
-
-        /* Initialize the game */
-        initGame();
-
-        /* Initialize and populate the RecyclerView */
-        initRecylerView();
     }
 }
