@@ -24,11 +24,8 @@ public class Constants {
     public static final String WEB_SERVICE_ADDR_POST = "https://development.m75.ro/test_mts/public/highscore/public/highscore/";
     public static final int LIMIT_COUNT = 5;
 
-
     /* Shared Preferences */
     public static final String SCORE_INFO = "score_info";
     public static final String PLAYER_SCORE = "user_score";
     public static final String PLAYER_NAME = "player_name";
-
-
 }

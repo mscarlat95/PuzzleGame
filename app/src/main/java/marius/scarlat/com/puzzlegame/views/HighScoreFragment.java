@@ -19,6 +19,7 @@ import android.widget.Toast;
 import marius.scarlat.com.puzzlegame.R;
 import marius.scarlat.com.puzzlegame.general.Constants;
 import marius.scarlat.com.puzzlegame.general.ConvertTime;
+import marius.scarlat.com.puzzlegame.network.NetworkConnection;
 import marius.scarlat.com.puzzlegame.network.PublishScoreTask;
 import marius.scarlat.com.puzzlegame.network.RetreiveScoreTask;
 import marius.scarlat.com.puzzlegame.storage.SharedPref;
@@ -36,8 +37,11 @@ public class HighScoreFragment extends Fragment {
     private EditText playerNameEditText;
 
     public void displayScore() {
-        new RetreiveScoreTask(getActivity(), recyclerView, scoreAdapter).
-                execute(Constants.WEB_SERVICE_ADDR_GET + Constants.LIMIT_COUNT);
+
+        if (NetworkConnection.isAvailable(getContext())) {
+            new RetreiveScoreTask(getActivity(), recyclerView, scoreAdapter).
+                    execute(Constants.WEB_SERVICE_ADDR_GET + Constants.LIMIT_COUNT);
+        }
 
         showUserScore();
     }

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,7 +22,6 @@ public class PublishScoreTask extends AsyncTask<    String,     /* Parameters Ty
                                                     String> {   /* Result Type */
 
     private static final String TAG = "PublishScoreTask";
-
     private Context context;
     private ProgressDialog progressDialog;
 
@@ -43,7 +43,6 @@ public class PublishScoreTask extends AsyncTask<    String,     /* Parameters Ty
         HttpURLConnection urlConnection = null;
 
         try {
-
             /* Obtain player data */
             final String playerName = params[1];
             final String playerScore = params[2];
@@ -67,7 +66,7 @@ public class PublishScoreTask extends AsyncTask<    String,     /* Parameters Ty
 
             /* Publish */
             DataOutputStream outputStream = new DataOutputStream(urlConnection.getOutputStream());
-            outputStream.writeBytes(jsonObj.toString() + "/");
+            outputStream.writeBytes(jsonObj.toString());
             outputStream.flush();
             outputStream.close();
 
@@ -78,7 +77,7 @@ public class PublishScoreTask extends AsyncTask<    String,     /* Parameters Ty
             Log.d(TAG, "doInBackground: Result Status " + resultStatus);
             Log.d(TAG, "doInBackground: Result Message " + resultMessage);
 
-            return  resultMessage;
+            return  resultStatus + ": " + resultMessage;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -101,9 +100,11 @@ public class PublishScoreTask extends AsyncTask<    String,     /* Parameters Ty
             progressDialog.dismiss();
         }
 
+        /* Display UI message */
         if (result.equals(Constants.UNSET)) {
             Log.d(TAG, "onPostExecute: Score publishing didn't work");
+        } else {
+            Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
         }
-
     }
 }

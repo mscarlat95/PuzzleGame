@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import marius.scarlat.com.puzzlegame.R;
 import marius.scarlat.com.puzzlegame.general.Constants;
+import marius.scarlat.com.puzzlegame.network.NetworkConnection;
 import marius.scarlat.com.puzzlegame.network.RetreiveScoreTask;
 import marius.scarlat.com.puzzlegame.views_adapters.ScoreRecyclerViewAdapter;
 
@@ -28,9 +29,12 @@ public class MenuFragment extends Fragment {
     private TextView infoTextView;
 
     public void displayScore() {
-        new RetreiveScoreTask(getActivity(), recyclerView, scoreAdapter).execute(Constants.WEB_SERVICE_ADDR_GET + Constants.LIMIT_COUNT);
-    }
 
+        if (NetworkConnection.isAvailable(getContext())) {
+            new RetreiveScoreTask(getActivity(), recyclerView, scoreAdapter)
+                    .execute(Constants.WEB_SERVICE_ADDR_GET + Constants.LIMIT_COUNT);
+        }
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
