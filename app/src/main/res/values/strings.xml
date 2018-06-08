@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">PuzzleGame</string>
     <string name="number_default_val">-1</string>
-    <string name="restart_game_msg">Press here in order to restart the game!</string>
+    <string name="restart_game_msg">* Press here in order to restart the game!</string>
     <string name="sort_numbers_info">* Sort numbers in ascending order</string>
     <string name="start_game_info">* Click anywhere to START</string>
+    <string name="default_info_msg">* Information</string>
+    <string name="play_game_msg">Play game</string>
+    <string name="user_name_hint">Enter your username here</string>
+    <string name="score">Score</string>
+    <string name="high_scores">High Scores</string>
+    <string name="publish_score_msg">* Press Here to Publish your score</string>
+    <string name="last_score">Your Score:</string>
 </resources>

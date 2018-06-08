@@ -1,5 +1,7 @@
-package marius.scarlat.com.puzzlegame;
+package marius.scarlat.com.puzzlegame.views;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -7,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import marius.scarlat.com.puzzlegame.R;
+import marius.scarlat.com.puzzlegame.game_design.Game;
+import marius.scarlat.com.puzzlegame.general.Constants;
+import marius.scarlat.com.puzzlegame.general.ConvertTime;
+import marius.scarlat.com.puzzlegame.storage.SharedPref;
+import marius.scarlat.com.puzzlegame.views_adapters.GameRecyclerViewAdapter;
 
 public class GameFragment extends Fragment {
     private static final String TAG = "GameFragment";
@@ -62,16 +70,48 @@ public class GameFragment extends Fragment {
             infoTextView.setText(R.string.restart_game_msg);
             infoTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) {/* Initialize the game */
+                    initGame();
+                    initRecylerView();
                     startGame();
                 }
             });
+
+            displayFinishDialog();
+
             return true;
         }
 
         /* Game is still running */
         return false;
     }
+
+
+    private void displayFinishDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        builder.setTitle("Game Over")
+                .setMessage("Do you want to publish your score?")
+                .setNegativeButton("No", null)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        /* Save user score */
+                        long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+                        SharedPref.saveScore(ConvertTime.encodeTime(elapsedMillis));
+                        Log.d(TAG, "User Score: " + SharedPref.getLastScore());
+
+                        /* Display scores */
+                        ((MainActivity) getActivity()).setViewPager(Constants.SCORE_FRAGMENT_POSITION);
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.getWindow().getAttributes().windowAnimations = R.style.BottomUpDialogAnim;
+        alert.show();
+    }
+
 
     /* Setup a new game */
     private void initGame() {
@@ -86,27 +126,31 @@ public class GameFragment extends Fragment {
     private void initRecylerView() {
         Log.d(TAG, "Initializing the RecylerView and its items");
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), this, game.getNumbers());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        GameRecyclerViewAdapter adapter = new GameRecyclerViewAdapter(getContext(), this, game.getNumbers());
 
-        recyclerView.setLayoutManager(layoutManager);
+        if (recyclerView == null || linearLayoutManager == null) {
+            Log.d(TAG, "initRecylerView: RecyclerView or LinearLayoutManager is NULL");
+            return;
+        }
+
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
     }
 
     private void initChronometer() {
         Log.d(TAG, "Initializing the Chronometer");
+
+        /* Reset elapsed time to 0:0 */
         chronometer.setBase(SystemClock.elapsedRealtime());
+
+        /* Start Chronometer */
         chronometer.start();
         chronometer.setFormat("- Elapsed Time: %s -");
     }
 
     public void startGame() {
         Log.d(TAG, "Starting a new game");
-        /* Initialize the game */
-        initGame();
-
-        /* Initialize and populate the RecyclerView */
-        initRecylerView();
 
         /* Initialize bottom info */
         infoTextView.setText(R.string.sort_numbers_info);
@@ -118,21 +162,8 @@ public class GameFragment extends Fragment {
 
     private void initViews(View view) {
         chronometer = view.findViewById(R.id.elapsed_time_chronometer);
-        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView = view.findViewById(R.id.game_recycler_view);
         infoTextView = view.findViewById(R.id.info_text_view);
-    }
-
-    private void initToolbar(View view) {
-        Toolbar toolbar = view.findViewById(R.id.toolbar);
-        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((MainActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).setViewPager(Constants.MENU_FRAGMENT_POSITION);
-            }
-        });
     }
 
     @Nullable
@@ -141,13 +172,24 @@ public class GameFragment extends Fragment {
         Log.d(TAG, "onCreateView: Method was invoked!");
 
         View view = inflater.inflate(R.layout.fragment_game, container, false);
+        view.setTag(TAG);
 
-        /* Initialize toolbar */
-        initToolbar(view);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Log.d(TAG, "onViewCreated: Method was invoked!");
+
+        super.onViewCreated(view, savedInstanceState);
 
         /* Initialize Android views */
         initViews(view);
 
-        return view;
+        /* Initialize the game */
+        initGame();
+
+        /* Initialize and populate the RecyclerView */
+        initRecylerView();
     }
 }

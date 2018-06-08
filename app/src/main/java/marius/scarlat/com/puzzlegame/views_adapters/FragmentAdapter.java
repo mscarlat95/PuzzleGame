@@ -1,4 +1,4 @@
-package marius.scarlat.com.puzzlegame;
+package marius.scarlat.com.puzzlegame.views_adapters;
 
 
 import android.support.v4.app.Fragment;

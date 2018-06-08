@@ -1,4 +1,4 @@
-package marius.scarlat.com.puzzlegame;
+package marius.scarlat.com.puzzlegame.game_design;
 
 
 import android.util.Log;

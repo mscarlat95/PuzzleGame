@@ -1,4 +1,4 @@
-package marius.scarlat.com.puzzlegame;
+package marius.scarlat.com.puzzlegame.views_adapters;
 
 
 import android.content.Context;
@@ -13,44 +13,51 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+import marius.scarlat.com.puzzlegame.game_design.GameItemListener;
+import marius.scarlat.com.puzzlegame.R;
+import marius.scarlat.com.puzzlegame.general.Constants;
+import marius.scarlat.com.puzzlegame.views.GameFragment;
 
-    private static final String TAG = "RecyclerViewAdapter";
+public class GameRecyclerViewAdapter extends RecyclerView.Adapter<GameRecyclerViewAdapter.GameItemViewHolder>{
+
+    private static final String TAG = "GameRecyclerViewAdapter";
 
     private GameFragment fragment;
     private Context context;
     private ArrayList<Integer> numbers = new ArrayList<>();
 
+    /* Constructor */
+    public GameRecyclerViewAdapter(Context context, GameFragment fragment, ArrayList<Integer> numbers) {
+        this.context = context;
+        this.fragment = fragment;
+        this.numbers = numbers;
+    }
+
+    /* Setters and Getters */
     public Context getContext() { return  context; }
     public ArrayList<Integer> getNumbers() { return  numbers; }
 
     public void setContext(Context context) { this.context = context; }
     public void setNumbers(ArrayList<Integer> numbers) { this.numbers = numbers; }
 
-    public RecyclerViewAdapter(Context context, GameFragment fragment, ArrayList<Integer> numbers) {
-        this.context = context;
-        this.fragment = fragment;
-        this.numbers = numbers;
-    }
-
-    /* Creates a new ViewHolder which the RecycleView can reuse */
+    /* Creates a new GameItemViewHolder which the RecycleView can reuse */
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public GameItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder: Method was invoked!");
 
         /* Inflates the provided layout */
-        if (viewType == Constants.TYPE_ITEM) {
+        if (viewType == Constants.TYPE_GAME_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.layout_list_item, parent, false);
-            return new ViewHolder(view);
+                    R.layout.layout_game_item, parent, false);
+            return new GameItemViewHolder(view);
         }
 
-        throw new RuntimeException("Unkown view type item equals to " + viewType);
+        throw new RuntimeException(TAG + ": Unkown view type item equals to " + viewType);
     }
 
     /* Called whenever a new item is added to list */
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(GameItemViewHolder holder, final int position) {
         Log.d(TAG, "onBindViewHolder: Method was invoked!");
 
         /* Set numbers values */
@@ -69,7 +76,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemViewType(int position) {
-        return Constants.TYPE_ITEM;
+        return Constants.TYPE_GAME_ITEM;
     }
 
     public boolean isGameAvailable() {
@@ -104,15 +111,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     /* Item holder managed by RecyclerView */
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class GameItemViewHolder extends RecyclerView.ViewHolder {
 
         private RelativeLayout itemLayout;
         private TextView numberTextView;
 
-        public ViewHolder(View itemView) {
+        /* Getters and setters */
+        public RelativeLayout getItemLayout() { return itemLayout; }
+        public void setItemLayout(RelativeLayout itemLayout) { this.itemLayout = itemLayout; }
+
+        public TextView getNumberTextView() { return numberTextView; }
+        public void setNumberTextView(TextView numberTextView) { this.numberTextView = numberTextView; }
+
+        /* Constructor */
+        public GameItemViewHolder(View itemView) {
             super(itemView);
 
-            itemLayout = itemView.findViewById(R.id.layout_item);
+            itemLayout = itemView.findViewById(R.id.layout_game_item);
             numberTextView = itemView.findViewById(R.id.number_text_view);
         }
     }

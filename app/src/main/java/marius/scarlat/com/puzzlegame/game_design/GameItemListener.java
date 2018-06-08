@@ -1,4 +1,4 @@
-package marius.scarlat.com.puzzlegame;
+package marius.scarlat.com.puzzlegame.game_design;
 
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -11,14 +11,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import marius.scarlat.com.puzzlegame.R;
+import marius.scarlat.com.puzzlegame.views_adapters.GameRecyclerViewAdapter;
+
 public class GameItemListener {
     private static final String TAG = "GameItemListener";
 
     /* In order to update recyclerview on data changed */
-    private RecyclerViewAdapter adapter;
+    private GameRecyclerViewAdapter adapter;
     private View view;
 
-    public GameItemListener(RecyclerViewAdapter adapter, View view) {
+    public GameItemListener(GameRecyclerViewAdapter adapter, View view) {
         this.adapter = adapter;
         this.view = view;
     }
