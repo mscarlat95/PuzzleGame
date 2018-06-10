@@ -119,11 +119,9 @@ public class PublishScoreTask extends AsyncTask<    String,     /* Parameters Ty
 
             Response response = client.newCall(request).execute();
 
-            Log.d(TAG, "doInBackground: Result " + response.body().toString());
-            Log.d(TAG, "doInBackground: Successful " + response.isSuccessful());
-            Log.d(TAG, "doInBackground: Result " + response.toString());
-
-            return  response.body().toString();
+            Log.d(TAG, "doInBackground: Result Successful " + response.isSuccessful());
+            Log.d(TAG, "doInBackground: Result Info " + response.toString());
+            return  response.message();
 
         } catch (JSONException e) {
             e.printStackTrace();
