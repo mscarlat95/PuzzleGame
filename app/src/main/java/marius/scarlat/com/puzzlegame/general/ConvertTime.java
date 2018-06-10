@@ -17,7 +17,8 @@ public class ConvertTime {
 
         double result = ((double) millis / 1000 / 3600);
 
-        return Double.valueOf(String.format("%.3f", result));
+        return result;
+//        return Double.valueOf(String.format("%.3f", result));
     }
 
     public static String decodeTime(double value) {

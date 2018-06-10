@@ -152,6 +152,9 @@ public class GameFragment extends Fragment {
     public void startGame() {
         Log.d(TAG, "Starting a new game");
 
+        /* Clear previous results */
+        SharedPref.clear(Constants.PLAYER_SCORE);
+
         /* Initialize the game */
         initGame();
 

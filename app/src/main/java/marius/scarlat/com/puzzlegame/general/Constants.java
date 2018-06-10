@@ -25,7 +25,7 @@ public class Constants {
     public static final int LIMIT_COUNT = 5;
 
     /* Shared Preferences */
-    public static final String SCORE_INFO = "score_info";
-    public static final String PLAYER_SCORE = "user_score";
+    public static final String SCORE_INFO = "score_info_preferences";
+    public static final String PLAYER_SCORE = "player_score";
     public static final String PLAYER_NAME = "player_name";
 }

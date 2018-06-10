@@ -36,8 +36,14 @@ public class SharedPref {
         preferencesEditor.apply();
     }
 
+    public static void clear(String key) {
+        preferencesEditor = sharedPreferences.edit();
+        preferencesEditor.remove(key);
+        preferencesEditor.apply();
+    }
+
     public static double getLastScore() {
-        return Double.valueOf(sharedPreferences.getString(Constants.PLAYER_SCORE, "0"));
+        return Double.valueOf(sharedPreferences.getString(Constants.PLAYER_SCORE, "-1.0"));
     }
 
     public static String getLastPlayer() {

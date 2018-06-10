@@ -99,6 +99,11 @@ public class HighScoreFragment extends Fragment {
                     return;
                 }
 
+                if (playerScore < 0) {
+                    Toast.makeText(getActivity(), "Invalid Score. Play again in order to publish your score!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 /* Save player name for the next time */
                 SharedPref.savePlayer(playerName);
 
