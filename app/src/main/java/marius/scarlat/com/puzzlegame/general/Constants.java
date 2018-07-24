@@ -21,7 +21,7 @@ public class Constants {
 
     /* Web Service */
     public static final String WEB_SERVICE_ADDR_GET = "https://development.m75.ro/test_mts/public/highscore/";
-    public static final String WEB_SERVICE_ADDR_POST = "https://development.m75.ro/test_mts/public/highscore/public/highscore/";
+    public static final String WEB_SERVICE_ADDR_POST = "https://development.m75.ro/test_mts/public/highscore/";
     public static final int LIMIT_COUNT = 5;
 
     /* Shared Preferences */

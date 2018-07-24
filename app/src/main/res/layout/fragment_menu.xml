@@ -16,7 +16,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:background="@android:color/transparent"
         android:scaleType="fitXY"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -39,7 +39,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_image_view"
-        app:layout_constraintVertical_bias="0.105"/>
+        />
 
 
     <android.support.v7.widget.RecyclerView
@@ -77,13 +77,12 @@
 
     <TextView
         android:id="@+id/high_scores_text_view"
-        android:layout_width="368dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="42dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="24dp"
         android:text="@string/high_scores"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.0"

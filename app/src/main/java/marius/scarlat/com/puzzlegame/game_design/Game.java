@@ -33,7 +33,7 @@ public class Game {
     public void populateList() {
         Log.d(TAG, "populateList: Generating numbers");
 
-        numbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
+        numbers = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5,6 ,7 ,8));
         Collections.shuffle(numbers);
         Log.d(TAG, "populateList: Result" + numbers.toString());
     }

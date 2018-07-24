@@ -4,7 +4,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/layout_score_item"
                 android:layout_gravity="center"
-                android:padding="10dp">
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="wrap_content"

@@ -36,6 +36,8 @@ public class HighScoreFragment extends Fragment {
     private TextView playerScoreTextView;
     private EditText playerNameEditText;
 
+    private boolean scorePosted = false;
+
     public void displayScore() {
 
         if (NetworkConnection.isAvailable(getContext())) {
@@ -85,6 +87,12 @@ public class HighScoreFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                if (scorePosted) {
+                    Toast.makeText(getActivity(), "Your score has already been posted!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+
                 final String playerName = playerNameEditText.getText().toString();
                 final double playerScore = SharedPref.getLastScore();
 
@@ -109,8 +117,7 @@ public class HighScoreFragment extends Fragment {
 
                 /* Publish score on the web server address */
                 new PublishScoreTask(getContext()).execute(Constants.WEB_SERVICE_ADDR_POST, playerName, String.valueOf(playerScore));
-
-                /* Go back to the menu fragment */
+                scorePosted = true;
 
             }
         });

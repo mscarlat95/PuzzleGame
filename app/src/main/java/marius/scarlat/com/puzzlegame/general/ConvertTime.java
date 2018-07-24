@@ -10,15 +10,10 @@ public class ConvertTime {
     public static double encodeTime(long millis) {
         Log.d(TAG, "encodeTime: Method was invoked!");
 
-        if (millis < 0) {
-            Log.d(TAG, "encodeTime: Time is undefined");
-            return -1.0;
-        }
+        int seconds = (int) (millis / 1000) % 60 ;
+        int minutes = (int) ((millis / (1000*60)) % 60);
 
-        double result = ((double) millis / 1000 / 3600);
-
-        return result;
-//        return Double.valueOf(String.format("%.3f", result));
+        return Double.parseDouble(minutes + "." + seconds);
     }
 
     public static String decodeTime(double value) {
@@ -29,9 +24,8 @@ public class ConvertTime {
             return Constants.UNSET;
         }
 
-        int milliseconds = (int) ((value * 3600) * 1000);
-        int seconds = (int) (milliseconds / 1000) % 60 ;
-        int minutes = (int) ((milliseconds / (1000*60)) % 60);
+        int minutes = (int) value;
+        int seconds = (int) ((value - minutes) * 100);
 
         return String.format("%d:%d", minutes, seconds);
     }

@@ -59,11 +59,11 @@ public class GameFragment extends Fragment {
         if (game.isFinished()) {
             Log.d(TAG, "updateGame: Game is finished");
 
-            /* Update game state */
-            game.setState(Constants.INACTIVE);
-
             /* Stop chronometer */
             chronometer.stop();
+
+            /* Update game state */
+            game.setState(Constants.INACTIVE);
 
             /* Update UI */
             Toast.makeText(getActivity(), "Congratulations!", Toast.LENGTH_SHORT).show();

@@ -126,9 +126,6 @@ public class RetreiveScoreTask extends AsyncTask<   String,     /* Parameters Ty
                 scores.add(item.getDouble("value"));
             }
 
-//            Log.d(TAG, "Received users: " + users.toString());
-//            Log.d(TAG, "Received scores: " + scores.toString());
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
